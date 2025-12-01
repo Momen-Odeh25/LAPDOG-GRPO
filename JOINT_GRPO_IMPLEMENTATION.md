@@ -138,32 +138,6 @@ Example with default settings:
 - Using gradient accumulation to handle memory constraints
 - Training generator-only first, then enabling joint training
 
-## Expected Behavior
-
-### Monitoring Metrics
-
-You should see additional metrics during training:
-- **Generator metrics**: BLEU, F1, ROUGE scores (as before)
-- **Retriever metrics**: Document selection quality (implicitly via generator rewards)
-- **KL divergences**: Both generator and retriever KL should stay bounded (<0.1)
-
-### Training Dynamics
-
-1. **Early training** (first 500-1000 steps):
-   - Retriever learns to select documents that lead to higher generator rewards
-   - Generator learns to produce better responses given selected documents
-   - Both policies should improve simultaneously
-
-2. **Mid training**:
-   - Retriever becomes more discriminative in document selection
-   - Generator produces more consistent high-quality responses
-   - KL divergences should stabilize
-
-3. **Late training**:
-   - Both policies converge
-   - Rewards should be higher than generator-only training
-   - Document selection should be more relevant
-
 ## Debugging
 
 If you encounter issues:
@@ -218,26 +192,6 @@ lapdog.py
     └── calls reinforcement_learning() [Modified - pass extra params]
 ```
 
-## Testing
-
-To verify the implementation:
-
-1. **Sanity check** (generator-only should still work):
-   ```bash
-   python train.py --use_grpo --grpo_group_size 4 [...]
-   ```
-
-2. **Joint training test**:
-   ```bash
-   python train.py --use_grpo --grpo_train_retriever --grpo_retriever_group_size 3 --grpo_group_size 4 [...]
-   ```
-
-3. **Monitor logs** for:
-   - Both retriever and generator losses
-   - No NaN or Inf values
-   - Gradual improvement in metrics
-   - KL divergences staying bounded
-
 ## Hyperparameter Tuning
 
 Start with these values and tune based on results:
@@ -260,10 +214,3 @@ Increase `grpo_kl_coeff` to 0.05-0.1 if:
 - Training becomes unstable
 - Want more conservative updates
 
-## Future Improvements
-
-Possible enhancements:
-1. **Adaptive group sizes**: Dynamically adjust $k$ and $G$ during training
-2. **Document diversity penalty**: Encourage retriever to select diverse documents
-3. **Hierarchical sampling**: Sample document types first, then specific documents
-4. **Retriever curriculum**: Start with generator-only, gradually enable retriever training
