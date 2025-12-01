@@ -23,8 +23,6 @@ We extend LAPDOG with:
 
 ##  Architecture
 
-![LAPDOG Architecture](figures/framework.png)
-
 The model combines:
 - **T5-based Generator**: Produces personalized dialogue responses
 - **Contriever-based Retriever**: Retrieves relevant context from external knowledge
@@ -278,3 +276,4 @@ For index building, reduce embedder batch size:
 ##  Contact
 
 For questions or issues, please open a GitHub issue or contact the maintainers.
+
