@@ -105,14 +105,6 @@ loss = -log_prob * advantage + kl_penalty
 - **Medium (0.1-0.2)**: Balanced (recommended)
 - **High (0.5-1.0)**: Conservative, slower learning
 
-##  Monitoring Training
-
-Watch these metrics during training:
-- **Reward progression**: Should increase over time
-- **KL divergence**: Should stay bounded (not explode)
-- **Advantage variance**: Should decrease as training progresses
-- **Generation diversity**: GRPO should maintain diverse outputs
-
 ##  Example Training Scripts
 
 ### Experiment 1: GRPO with Conservative KL
@@ -166,37 +158,6 @@ python train.py \
    - But converges faster due to variance reduction
    - Overall training time may be similar or better
 
-##  Troubleshooting
-
-### Out of Memory Error
-```bash
-# Reduce batch size and/or group size
---per_gpu_batch_size 1 --grpo_group_size 2
-```
-
-### KL Divergence Exploding
-```bash
-# Increase KL coefficient
---grpo_kl_coeff 0.5
-```
-
-### Rewards Not Improving
-```bash
-# Try more exploration
---grpo_kl_coeff 0.05 --grpo_group_size 8
-```
-
-### Training Too Slow
-```bash
-# Reduce group size
---grpo_group_size 2
-```
-
-##  Additional Resources
-
-- Full implementation details: `GRPO_IMPLEMENTATION_SUMMARY.md`
-- Original code backups: `src/backup/`
-- Verification script: `verify_grpo.py`
 
 ##  Summary of Implementation
 
@@ -220,4 +181,3 @@ python train.py \
 
 ---
 
-**Ready to start training with GRPO!** 
