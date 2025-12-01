@@ -5,13 +5,7 @@ This document summarizes the implementation of GRPO (Group Relative Policy Optim
 
 ## Files Modified
 
-### 1. Backup Created
-All original files have been backed up to `src/backup/`:
-- `src/backup/lapdog.py`
-- `src/backup/options.py`
-- `src/backup/train.py`
-
-### 2. src/options.py
+### 1. src/options.py
 Added GRPO-specific command-line arguments:
 
 ```python
@@ -22,7 +16,7 @@ Added GRPO-specific command-line arguments:
 --reference_model_path     # Path to reference model for KL computation
 ```
 
-### 3. src/lapdog.py
+### 2. src/lapdog.py
 
 #### New Methods Added:
 
@@ -161,3 +155,4 @@ To use this implementation:
 3. Set `--gold_score_mode f1rougebleudist` (required)
 4. Use `--reader_rl_learning` to activate RL training
 5. Monitor KL divergence and reward progression during training
+
