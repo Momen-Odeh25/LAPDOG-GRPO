@@ -1,16 +1,16 @@
 # GRPO Implementation - Quick Start Guide
 
-## ✅ Implementation Complete!
+##  Implementation Complete!
 
 All GRPO modifications have been successfully implemented and backed up.
 
-## 📁 Files Modified
+##  Files Modified
 
 1. **src/options.py** - Added 5 new GRPO parameters
 2. **src/lapdog.py** - Added 5 new methods + modified 2 existing methods
 3. **Backups created in**: `src/backup/`
 
-## 🚀 How to Use GRPO
+##  How to Use GRPO
 
 ### Basic GRPO Training Command
 
@@ -41,7 +41,7 @@ python train.py \
     --per_gpu_batch_size 2
 ```
 
-## 🔧 GRPO Parameters Explained
+##  GRPO Parameters Explained
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
@@ -51,7 +51,7 @@ python train.py \
 | `--grpo_top_k_ratio` | 0.5 | Ratio of top responses for advantage computation (reserved for future use) |
 | `--reference_model_path` | None | Path to reference model checkpoint (if None, uses copy of initial model) |
 
-## 📊 What GRPO Does
+##  What GRPO Does
 
 **Standard REINFORCE:**
 - Generates 1 response per input
@@ -60,23 +60,23 @@ python train.py \
 
 **GRPO (Group Relative Policy Optimization):**
 - Generates k responses per input (default k=4)
-- Computes group-relative advantages: `A_i = (r_i - μ_r) / σ_r`
+- Computes group-relative advantages: `A_i = (r_i - _r) / _r`
 - Adds KL divergence penalty with reference model
 - More stable training with variance reduction
 
-## 🎯 Key Differences
+##  Key Differences
 
 ### Algorithm Flow
 
 **REINFORCE:**
 ```
-Input → Generate 1 response → Compute reward → Policy gradient
+Input  Generate 1 response  Compute reward  Policy gradient
 ```
 
 **GRPO:**
 ```
-Input → Generate k responses → Compute all rewards → 
-Group advantages → Policy gradient with KL penalty
+Input  Generate k responses  Compute all rewards  
+Group advantages  Policy gradient with KL penalty
 ```
 
 ### Loss Functions
@@ -93,7 +93,7 @@ kl_penalty = kl_coeff * (current_logprob - reference_logprob)
 loss = -log_prob * advantage + kl_penalty
 ```
 
-## 💡 Hyperparameter Tuning Tips
+##  Hyperparameter Tuning Tips
 
 ### Group Size (`--grpo_group_size`)
 - **Small (2-4)**: Faster training, less stable
@@ -105,7 +105,7 @@ loss = -log_prob * advantage + kl_penalty
 - **Medium (0.1-0.2)**: Balanced (recommended)
 - **High (0.5-1.0)**: Conservative, slower learning
 
-## 🔍 Monitoring Training
+##  Monitoring Training
 
 Watch these metrics during training:
 - **Reward progression**: Should increase over time
@@ -113,7 +113,7 @@ Watch these metrics during training:
 - **Advantage variance**: Should decrease as training progresses
 - **Generation diversity**: GRPO should maintain diverse outputs
 
-## 📝 Example Training Scripts
+##  Example Training Scripts
 
 ### Experiment 1: GRPO with Conservative KL
 ```bash
@@ -146,7 +146,7 @@ python train.py \
     --per_gpu_batch_size 2
 ```
 
-## ⚠️ Important Notes
+##  Important Notes
 
 1. **Memory Usage**: GRPO uses `group_size` times more memory during generation
    - Reduce `per_gpu_batch_size` if you run out of memory
@@ -166,7 +166,7 @@ python train.py \
    - But converges faster due to variance reduction
    - Overall training time may be similar or better
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Out of Memory Error
 ```bash
@@ -192,13 +192,13 @@ python train.py \
 --grpo_group_size 2
 ```
 
-## 📚 Additional Resources
+##  Additional Resources
 
 - Full implementation details: `GRPO_IMPLEMENTATION_SUMMARY.md`
 - Original code backups: `src/backup/`
 - Verification script: `verify_grpo.py`
 
-## ✨ Summary of Implementation
+##  Summary of Implementation
 
 ### New Methods in `lapdog.py`:
 1. `_initialize_reference_model()` - Sets up frozen reference model
@@ -220,4 +220,4 @@ python train.py \
 
 ---
 
-**Ready to start training with GRPO!** 🎉
+**Ready to start training with GRPO!** 

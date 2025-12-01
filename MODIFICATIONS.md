@@ -1,4 +1,4 @@
-﻿# Complete List of Modifications to Original LAPDOG
+# Complete List of Modifications to Original LAPDOG
 
 This document provides a detailed, accurate list of all changes made to the original LAPDOG codebase to add GRPO functionality.
 
@@ -142,24 +142,24 @@ if step % 50 == 0:
  Command-line argument system  
 
 ### What We Added:
-âž **4 new methods** in `src/lapdog.py`:
+ **4 new methods** in `src/lapdog.py`:
    - `_initialize_reference_model()`
    - `generate_with_sampling()`
    - `f1rougebleu_score_grpo()`
    - `grpo_learning()`
 
-âž **Modified 2 existing methods**:
+ **Modified 2 existing methods**:
    - `__init__()` - Added GRPO initialization
    - `reinforcement_learning()` - Added routing to GRPO
 
-âž **Enhanced 1 existing method**:
+ **Enhanced 1 existing method**:
    - `f1rougebleu_score()` - Added length penalty
 
-âž **10 new command-line arguments** in `src/options.py`
+ **10 new command-line arguments** in `src/options.py`
 
-âž **WandB logging integration** in `train.py`
+ **WandB logging integration** in `train.py`
 
-âž **Memory optimization** in `train.py` (CUDA cache clearing)
+ **Memory optimization** in `train.py` (CUDA cache clearing)
 
 ### What We Did NOT Add:
  New training script (used existing `train.py`)  

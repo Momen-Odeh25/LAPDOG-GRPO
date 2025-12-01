@@ -2,7 +2,7 @@
 
 Extended implementation of LAPDOG (Learning Retrieval Augmentation for Personalized Dialogue Generation) with **Group Relative Policy Optimization (GRPO)** for enhanced reinforcement learning.
 
-## 📋 About
+##  About
 
 This repository extends the original [LAPDOG](https://github.com/hqsiswiliam/LAPDOG) model with GRPO training capabilities. The original LAPDOG paper: [Learning Retrieval Augmentation for Personalized Dialogue Generation](https://aclanthology.org/2023.emnlp-main.154/).
 
@@ -21,7 +21,7 @@ We extend LAPDOG with:
 3. **Length Penalty Control**: Dynamic generation length penalty to control response verbosity
 4. **Enhanced Monitoring**: WandB integration for comprehensive training visualization
 
-## 🏗️ Architecture
+##  Architecture
 
 ![LAPDOG Architecture](figures/framework.png)
 
@@ -30,7 +30,7 @@ The model combines:
 - **Contriever-based Retriever**: Retrieves relevant context from external knowledge
 - **GRPO Optimization**: Group-relative advantage estimation for stable policy gradients
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Installation
 
@@ -49,12 +49,12 @@ conda activate lapdog
 The repository expects data in the following structure:
 ```
 data/
-├── convai2/
-│   ├── train.jsonl
-│   └── valid.jsonl
-└── corpora/
-    └── story/
-        └── story.jsonl
+ convai2/
+    train.jsonl
+    valid.jsonl
+ corpora/
+     story/
+         story.jsonl
 ```
 
 ### Training
@@ -119,14 +119,14 @@ python evaluate.py \
   --write_results
 ```
 
-## 📊 Key Features
+##  Key Features
 
 ### GRPO (Group Relative Policy Optimization)
 
 Standard REINFORCE uses absolute rewards for policy gradients, leading to high variance. GRPO improves this by:
 
 1. **Group Generation**: Generate k responses per prompt (default k=4)
-2. **Relative Advantages**: Normalize rewards within each group: `A_i = (r_i - μ_r) / σ_r`
+2. **Relative Advantages**: Normalize rewards within each group: `A_i = (r_i - _r) / _r`
 3. **KL Regularization**: Prevent policy divergence from reference model
 4. **Stable Learning**: Reduced gradient variance and more consistent improvements
 
@@ -162,7 +162,7 @@ strength = 2.0 if length_ratio < 1.0 else 1.0
 
 This helps maintain BLEU scores by preventing overly verbose or brief responses.
 
-## 🔧 Configuration
+##  Configuration
 
 ### Key Training Arguments
 
@@ -188,7 +188,7 @@ Control the relative importance of different metrics:
 --scale_rouge  # Scale ROUGE by 100x
 ```
 
-## 📈 Monitoring with WandB
+##  Monitoring with WandB
 
 Track training progress with Weights & Biases:
 
@@ -204,7 +204,7 @@ Logged metrics include:
 - Learning rates, gradient norms
 - Memory usage and training speed
 
-## 🎯 Evaluation Metrics
+##  Evaluation Metrics
 
 The model is evaluated on:
 
@@ -215,7 +215,7 @@ The model is evaluated on:
 - **ROUGE-L**: Longest common subsequence
 - **Length Ratio**: Generated length / Reference length
 
-## 📝 Citation
+##  Citation
 
 If you use this code, please cite both the original LAPDOG paper and acknowledge this extension:
 
@@ -228,28 +228,28 @@ If you use this code, please cite both the original LAPDOG paper and acknowledge
 }
 ```
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! Please feel free to submit issues or pull requests.
 
-## 📜 License
+##  License
 
 This project maintains the same license as the original LAPDOG repository.
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - Original LAPDOG implementation: [hqsiswiliam/LAPDOG](https://github.com/hqsiswiliam/LAPDOG)
 - GRPO algorithm based on recent advances in group-relative policy optimization
 - Built with PyTorch, Transformers, and Fairscale
 
-## 📚 Additional Documentation
+##  Additional Documentation
 
 - `GRPO_IMPLEMENTATION_SUMMARY.md` - Detailed technical implementation notes
 - `GRPO_QUICKSTART.md` - Quick start guide for GRPO training
 - `JOINT_GRPO_IMPLEMENTATION.md` - Joint retriever-generator GRPO details
 - `compute_metrics.py` - Standalone metric computation script
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### OOM (Out of Memory) Errors
 
@@ -275,6 +275,6 @@ For index building, reduce embedder batch size:
 --per_gpu_embedder_batch_size=512
 ```
 
-## 📧 Contact
+##  Contact
 
 For questions or issues, please open a GitHub issue or contact the maintainers.

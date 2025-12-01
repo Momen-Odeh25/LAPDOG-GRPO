@@ -127,13 +127,13 @@ python compute_metrics.py \
 ### Checkpoints
 ```
 ckpt/
-└── my_grpo_run/
-    ├── checkpoint/
-    │   ├── step-1000/
-    │   ├── step-2000/
-    │   └── ...
-    ├── valid-step-1000.jsonl
-    └── events.out.tfevents.*
+ my_grpo_run/
+     checkpoint/
+        step-1000/
+        step-2000/
+        ...
+     valid-step-1000.jsonl
+     events.out.tfevents.*
 ```
 
 ### Logs
@@ -146,14 +146,14 @@ wandb/                     # WandB logs
 
 ```
 Input Query
-    ↓
-[Retriever] → Top-k Documents
-    ↓
-[Generator] + Documents → Response
-    ↓
+    
+[Retriever]  Top-k Documents
+    
+[Generator] + Documents  Response
+    
 [Rewards: F1, ROUGE, BLEU]
-    ↓
-[GRPO Loss] → Update Both Models
+    
+[GRPO Loss]  Update Both Models
 ```
 
 ## Workflow Summary
