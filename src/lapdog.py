@@ -548,9 +548,9 @@ class Lapdog(nn.Module):
             gold_score = pt_bleu_normed.view(bsz, total_context) + gold_score
             if self.opt.metric_scale_factors is not None:
                 metric_factors = eval(self.opt.metric_scale_factors)
-                gold_score = metric_factors['bleu'] * pt_bleu_normed.view(bsz, total_context) + \
-                             metric_factors['f1'] * pt_f1.view(bsz, total_context) + \
-                             metric_factors['rouge'] * pt_rouge.view(bsz, total_context)
+                gold_score = metric_factors.get('bleu', 0.0) * pt_bleu_normed.view(bsz, total_context) + \
+                             metric_factors.get('f1', 0.0) * pt_f1.view(bsz, total_context) + \
+                             metric_factors.get('rouge', 0.0) * pt_rouge.view(bsz, total_context)
             if return_generated:
                 return gold_score, reader_output, input_token
             return gold_score
@@ -623,6 +623,16 @@ class Lapdog(nn.Module):
                 pt_bleu_scores = labels.new_tensor(bleu_scores, dtype=torch.float)
                 pt_bleu_scores = torch.clamp(pt_bleu_scores, min=0.0, max=100.0)
                 
+                # BERTScore for semantic similarity (optional)
+                if self.opt.use_bertscore:
+                    from bert_score import score as bert_score
+                    P, R, F1_bert = bert_score(reader_output_txt, label_txt, 
+                                                lang='en', rescale_with_baseline=True,
+                                                device=labels.device)
+                    pt_bertscore = F1_bert  # Range: typically 0-1, rescaled
+                else:
+                    pt_bertscore = torch.zeros_like(pt_f1)
+                
                 # Compute length penalty to prevent degenerate short outputs
                 # Use word-level length for more stable measurement
                 hyp_lengths = torch.tensor([len(out.split()) for out in reader_output_txt], dtype=torch.float, device=pt_f1.device)
@@ -652,9 +662,10 @@ class Lapdog(nn.Module):
                 group_score = pt_f1 + pt_rouge + pt_bleu_scores
                 if self.opt.metric_scale_factors is not None:
                     metric_factors = eval(self.opt.metric_scale_factors)
-                    group_score = metric_factors['bleu'] * pt_bleu_scores + \
-                                 metric_factors['f1'] * pt_f1 + \
-                                 metric_factors['rouge'] * pt_rouge
+                    group_score = metric_factors.get('bleu', 0.0) * pt_bleu_scores + \
+                                 metric_factors.get('f1', 0.0) * pt_f1 + \
+                                 metric_factors.get('rouge', 0.0) * pt_rouge + \
+                                 metric_factors.get('bertscore', 0.0) * pt_bertscore
                 
                 # Apply length penalty multiplicatively to final score
                 # This way, even with perfect BLEU/F1/ROUGE, short outputs get penalized

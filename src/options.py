@@ -386,6 +386,12 @@ class Options:
         )
 
         self.parser.add_argument(
+            "--use_bertscore",
+            action="store_true",
+            help="Use BERTScore for semantic similarity evaluation in rewards",
+        )
+
+        self.parser.add_argument(
             "--retriever_n_context",
             type=int,
             default=5,
